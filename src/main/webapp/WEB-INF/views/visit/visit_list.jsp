@@ -42,7 +42,7 @@ function del(f){
 	var c_pwd=f.c_pwd.value;//비교를 위한 비밀번호
 	
 	if(pwd != c_pwd){
-	alert('비밀번호가 달라용');
+	alert('비밀번호');
 	return;
 	}
 	//Ajax를 통해 idx를 서버로 전송
