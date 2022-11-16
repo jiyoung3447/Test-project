@@ -6,10 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="/vs/resources/js/httpRequest.js"></script>
-
 <style>
-*{margin:0; padding: 0;}
+	*{margin:0; padding: 0;}
 	#main_box{
 				width :330px;
 				margin : 0 auto;}
@@ -36,56 +34,61 @@
 		background : #ccf;
 	}
 </style>
+<!--  Ajax사용을 위한 httpRequest.js를 참조 -->
+<script src="/vs/resources/js/httpRequest.js"></script>
+
 <script>
-function del(f){
-	var pwd = f.pwd.value;//원본 비밀번호
-	var c_pwd=f.c_pwd.value;//비교를 위한 비밀번호
-	
-	if(pwd != c_pwd){
-	alert('비밀번호');
-	return;
+	//삭제버튼을 눌렀을 때
+	function del(f){
+		var pwd = f.pwd.value;//원본 비밀번호
+		var c_pwd=f.c_pwd.value;//비교를 위한 비밀번호
+		
+		if(pwd != c_pwd){
+		alert('비밀번호가 달라용');
+		return;
+		}
+		//Ajax를 통해 idx를 서버로 전송
+		var url="delete.do";
+		var param="idx="+f.idx.value + "&filename="+f.filename.value;
+		//delete.do?idx=1   &pwd=1111&c_pwd=1111
+		sendRequest(url,param,resultFunc,"POST");
 	}
-	//Ajax를 통해 idx를 서버로 전송
-	var url="delete.do";
-	var param="idx="+f.idx.value;
-	//delete.do?idx=1   &pwd=1111&c_pwd=1111
-	sendRequest(url,param,resultFunc,"POST");
-}
-//삭제 결과를 확인할 콜백 메서드
-function resultFunc(){
-	
-	if(xhr.readyState == 4 && xhr.status==200){
-		//컨트롤러에서 삭제 후 return해준 데이터를 받는다
-		var data = xhr.responseText;
-		if(data =="no"){
-			alert("삭제실패");
-			return;
-		}else{
-			alert("삭제성공");
-			location.href="list.do";
+	//삭제 결과를 확인할 콜백 메서드
+	function resultFunc(){
+		
+		if(xhr.readyState == 4 && xhr.status==200){
+			//컨트롤러에서 삭제 후 return해준 데이터를 받는다
+			var data = xhr.responseText;
+			if(data =='no'){
+				alert("삭제실패");
+				return;
+			}else{
+				alert("삭제성공");
+				location.href="list.do";
+			}
+			
+		}
+	}
+	//수정버튼을 눌렀을 때
+	function modify(f){
+		var pwd = f.pwd.value;//원본 비밀번호
+		var c_pwd=f.c_pwd.value;//비교를 위한 비밀번호
+		
+		if(pwd != c_pwd){
+		alert('비밀번호가 달라용');
+		return;
 		}
 		
+		f.action = "modify_form.do";
+		f.method= "post";
+		f.submit();
 	}
-}
-
-function modify(f){
-	var pwd = f.pwd.value;
-	var c_pwd = f.c_pwd.value;
 	
-	if(pwd != c_pwd){
-		alert("비밀번호가 다릅니다.");
-		return;
-	}
-	f.action="modify_form.do";
-	f.method="post";
-	f.submit();
-	
-}
+	</script>
 
-</script>
 </head>
 <body>
-<div id="main_box">
+	<div id="main_box">
 		<h1>**방명록 리스트**</h1>
 		<div align="center">
 			<input type="button" value="글쓰기" onclick="location.href='insert_form.do'">
@@ -93,12 +96,18 @@ function modify(f){
 		
 		<c:forEach var="vo" items="${ list }">
  	  		<div class="visit_box">
- 	  			<div class="type_content"><pre>${ vo.content }</pre></div>
+ 	  			<div class="type_content"><pre>${ vo.content }</pre><br>
+ 	  				
+ 	  			<c:if test="${vo.filename ne 'no_file'}">
+ 	  				<img src="/vs/resources/upload/${ vo.filename }" width="200" />
+ 	  			</c:if>
+ 	  			</div>
  	  			<div class="type_name">${ vo.name }</div>
  	  			<div class="type_regdate">작성일 : ${ vo.regdate }</div>
  	  			
  	  			<div>
  	  				<form>
+ 	  					<input type="hidden" name="filename" value="${ vo.filename }">
  	  					<input type="hidden" name="idx" value="${ vo.idx }">
  	  					<input type="hidden" name="pwd" value="${ vo.pwd }">
  	  					비밀번호<input type="password" name="c_pwd">
@@ -110,6 +119,5 @@ function modify(f){
  	 
  	</c:forEach>	
 	</div>
-
 </body>
 </html>
