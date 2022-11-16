@@ -14,6 +14,7 @@
 		f.action= "modify.do";
 		f.method ="post";
 		f.submit(); //전송
+		
 
 	}
 </script>

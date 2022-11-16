@@ -47,8 +47,6 @@
 			<input type="button" value="목록으로" onclick="location.href='list.do'">
 			</td>
 		</tr>
-		
-		
 	</table>
 </form>
 
