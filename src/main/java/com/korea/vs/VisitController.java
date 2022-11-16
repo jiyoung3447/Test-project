@@ -40,4 +40,16 @@ public class VisitController {
 		}
 		return result;
 	}
+	
+	@RequestMapping("/insert_form.do")
+	public String insert_form() {
+		return "WEB-INF/views/visit/visit_insert_form.jsp";
+	}
+	
+	@RequestMapping("/insert.do")
+	public String insert(VisitVO vo) {
+		int res = visit_dao.insert(vo);
+			System.out.println("res : " +res);
+		return "redirect:list.do";
+	}
 }

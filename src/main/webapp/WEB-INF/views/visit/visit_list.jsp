@@ -68,8 +68,16 @@ function resultFunc(){
 	}
 }
 
-
-
+function modify(f){
+	var pwd = f.pwd.value;
+	var c_pwd = f.c_pwd.value;
+	
+	if(pwd != c_pwd){
+		alert("비밀번호가 다릅니다.");
+		return;
+	}
+	f.action="modify"
+}
 
 </script>
 </head>

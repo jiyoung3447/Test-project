@@ -25,5 +25,11 @@ SqlSession sqlSession;
 		int res = sqlSession.delete("v.visit_delete", idx);
 		return res;
 	}
+	
+	//새글 쓰기
+	public int insert(VisitVO vo) {
+		int res = sqlSession.insert("v.visit_insert", vo);
+		return res;	
+	}
 
 }
