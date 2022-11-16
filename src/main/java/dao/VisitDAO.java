@@ -31,5 +31,17 @@ SqlSession sqlSession;
 		int res = sqlSession.insert("v.visit_insert", vo);
 		return res;	
 	}
+	
+	//수정할 게시글 한건 검색
+	public VisitVO selectOne(int idx) {
+		VisitVO vo = sqlSession.selectOne("v.visit_one", idx);
+		return vo;
+	}
+	
+	//수정
+	public int update(VisitVO vo) {
+		int res = sqlSession.update("v.visit_modify", vo);
+		return res;
+	}
 
 }

@@ -48,8 +48,30 @@ public class VisitController {
 	
 	@RequestMapping("/insert.do")
 	public String insert(VisitVO vo) {
+		
 		int res = visit_dao.insert(vo);
 			System.out.println("res : " +res);
 		return "redirect:list.do";
 	}
+	
+	//수정폼으로 이동
+	@RequestMapping("/modify_form.do")
+	public String modify_form(Model model, int idx) {
+		
+		VisitVO vo = visit_dao.selectOne(idx);
+		
+		if(vo != null) {
+			model.addAttribute("vo", vo);
+		}
+		
+		return "WEB-INF/views/visit/visit_modify_form.jsp";
+	}
+	
+	
+	 @RequestMapping("/modify.do") 
+	 public String modify(VisitVO vo) {
+		 int res = visit_dao.update(vo);
+		 return "redirect:list.do";
+	 }
+	 
 }

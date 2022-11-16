@@ -76,7 +76,10 @@ function modify(f){
 		alert("비밀번호가 다릅니다.");
 		return;
 	}
-	f.action="modify"
+	f.action="modify_form.do";
+	f.method="post";
+	f.submit();
+	
 }
 
 </script>
